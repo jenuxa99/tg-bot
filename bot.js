@@ -1,5 +1,5 @@
 const TelegramBot = require(`node-telegram-bot-api`);
-const token = `your token`;
+const token = `7355176635:AAE_lNO-utY6lEZu53R2NJ0JfhqDgOg6GDE`;
 const bot = new TelegramBot(token, {
   polling: {
     interval: 300,
@@ -168,6 +168,35 @@ const firstLvLChatMenu = async (ctx) => {
             ],
           },
         });
+        break;
+
+      case `smm-content-plan`:
+        const media = [
+          { type: "photo", media: "./assets/pic/smm-content-plan-2.jpeg" },
+          { type: "photo", media: "./assets/pic/smm-content-plan-3.jpeg" },
+          { type: "photo", media: "./assets/pic/smm-content-plan-4.jpeg" },
+        ];
+
+        await bot.sendMessage(
+          currentChat,
+          `...<u>SMM/Контент/Контент план</u>`,
+          {
+            parse_mode: "HTML",
+          }
+        );
+        await bot.sendMessage(
+          currentChat,
+          `Контент план - составляется на разные промежутки времени (от 1 дня до месяца). Благодаря этого у вас будет готовый шаблон, как интересно преподносить контент по определённым схемам`
+        );
+        await bot.sendPhoto(
+          currentChat,
+          "./assets/pic/smm-content-plan-1.jpeg"
+        );
+        await bot.sendMessage(
+          currentChat,
+          `Контент план может быть 2 типов: тезисный и подробный`
+        );
+        await bot.sendMediaGroup(currentChat, media);
         break;
 
       case `smm-visual`:
