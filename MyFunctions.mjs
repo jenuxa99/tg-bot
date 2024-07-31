@@ -1,21 +1,21 @@
 export const MyFunctions = {
-  findCase(msgORctx, casesObject) {
-    const found = casesObject.find((element) => element.case === msgORctx);
-    return found ? found.case : `- Текст не найден -`;
+  findCase(msgORctx, casesArray) {
+    const found = casesArray.find((element) => element.case === msgORctx);
+    return found ? found.case : console.log("Case not found");
   },
 
-  findKeyboard(msgORctx, casesObject) {
-    const found = casesObject.find((element) => element.case === msgORctx);
-    return found ? found.buttons : `- Текст не найден -`;
+  findKeyboard(msgORctx, casesArray) {
+    const found = casesArray.find((element) => element.case === msgORctx);
+    return found ? found.buttons : console.log(`Keyboard not found`);
   },
 
-  findText(msgORctx, casesObject) {
-    const found = casesObject.find((element) => element.case === msgORctx);
-    return found ? found.text : `- Текст не найден -`;
+  findText(msgORctx, casesArray) {
+    const found = casesArray.find((element) => element.case === msgORctx);
+    return found ? found.text : console.log(`Text not found`);
   },
 
-  findPosts(msgORctx, casesObject) {
-    const found = casesObject.find((element) => element.case === msgORctx);
-    return found ? found.posts : `- Посты не найдены -`;
+  findPosts(msgORctx, casesArray) {
+    const found = casesArray.find((element) => element.case === msgORctx);
+    return found ? found.posts : console.log(`Posts not found`);
   },
 };

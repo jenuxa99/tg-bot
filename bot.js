@@ -113,6 +113,7 @@ const callbackMenu = async (ctx) => {
         break;
 
       default:
+        // callbackFile;
         break;
     }
   } catch (error) {
@@ -132,16 +133,20 @@ const callbackFile = async (ctx) => {
           if (posts[i].content.length === 1) {
             if (posts[i].content[0].type === "photo") {
               await bot.sendPhoto(currentChat, posts[i].content[0].media, {
+                parse_mode: "HTML",
                 caption: posts[i].text,
               });
             } else {
               await bot.sendVideo(currentChat, posts[i].content[0].media, {
+                parse_mode: "HTML",
                 caption: posts[i].text,
               });
             }
           } else if (posts[i].content.length > 1) {
             await bot.sendMediaGroup(currentChat, posts[i].content).then(() => {
-              bot.sendMessage(currentChat, posts[i].text);
+              bot.sendMessage(currentChat, posts[i].text, {
+                parse_mode: "HTML",
+              });
             });
           }
         }
@@ -155,6 +160,9 @@ const callbackFile = async (ctx) => {
   }
 };
 
+bot.on(`text`, keyboardMenu);
+bot.on(`callback_query`, callbackMenu);
+bot.on(`callback_query`, callbackFile);
 bot.on(`polling_error`, (err) => {
   if (err.data && err.data.error) {
     console.log(err.data.error.message);
@@ -162,11 +170,3 @@ bot.on(`polling_error`, (err) => {
     console.log(err.message);
   }
 });
-bot.on(`text`, keyboardMenu);
-bot.on(`callback_query`, callbackMenu);
-bot.on(`callback_query`, callbackFile);
-
-// 1. Объединить "callbackMenu" и "callbackFile";
-// 2. Добавить кнопку после закрытия клавиатуры;
-// 3. Продумать setTimeOut;
-// 4. Перенести всю структуру из "callbackMenuOld" и удалить функцию из основного файла;
