@@ -1,4 +1,14 @@
-const TelegramBot = require(`node-telegram-bot-api`);
+"use strict";
+
+import TelegramBot from "node-telegram-bot-api";
+import { MyFunctions } from "./MyFunctions.mjs";
+import {
+  keyboardMenuCases,
+  callbackMenuCases,
+  callbackFileCases,
+} from "./cases.mjs";
+
+const $ = MyFunctions;
 const token = `7355176635:AAE_lNO-utY6lEZu53R2NJ0JfhqDgOg6GDE`;
 const bot = new TelegramBot(token, {
   polling: {
@@ -7,110 +17,32 @@ const bot = new TelegramBot(token, {
   },
 });
 
-const commands = [
-  { command: "start", description: "Запуск бота" },
-  { command: "menu", description: "Кнопочная навигация" },
-];
-
-const btnMenu = async (msg) => {
+const keyboardMenu = async (msg) => {
   const currentChat = msg.chat.id;
 
   try {
     switch (msg.text) {
       case `/start`:
-        await bot.sendMessage(currentChat, `Приветствие`);
+        await bot.sendMessage(currentChat, `Приветствие`, {
+          parse_mode: `HTML`,
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: `Показать каталог`, callback_data: `showCatalog` }],
+            ],
+            resize_keyboard: true,
+          },
+        });
         break;
 
-      case `/menu`:
+      case $.findCase(msg.text, keyboardMenuCases):
         await bot.sendMessage(
           currentChat,
-          `Каталог разделов теперь находится на клавиатуре ↓`,
+          `Каталог раздела <b>${$.findCase(msg.text, keyboardMenuCases)}</b>`,
           {
+            parse_mode: `HTML`,
             reply_markup: {
-              keyboard: [
-                [`Инфографика`, `Дизайн`],
-                [`SMM`, `Закрыть меню`],
-              ],
+              inline_keyboard: $.findKeyboard(msg.text, keyboardMenuCases),
               resize_keyboard: true,
-            },
-          }
-        );
-        break;
-
-      case `SMM`:
-        await bot.sendMessage(
-          currentChat,
-          `Каталог раздела <u>${msg.text}</u> ↓`,
-          {
-            parse_mode: "HTML",
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  { text: `Контент`, callback_data: `smm-content` },
-                  { text: `Визуал`, callback_data: `smm-visual` },
-                ],
-                [
-                  { text: `Триггеры продаж`, callback_data: `smm-trigger` },
-                  { text: `Мокап`, callback_data: `smm-mockup` },
-                ],
-                [
-                  { text: `Монтаж видео`, callback_data: `smm-montage` },
-                  { text: `Анимация`, callback_data: `smm-anim` },
-                ],
-                [{ text: `Закрыть Меню`, callback_data: `closeMenu` }],
-              ],
-            },
-          }
-        );
-        break;
-
-      case `Дизайн`:
-        await bot.sendMessage(
-          currentChat,
-          `Каталог раздела <u>${msg.text}</u> ↓`,
-          {
-            parse_mode: "HTML",
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  { text: `Прайс`, callback_data: `design-price` },
-                  { text: `Сертификат`, callback_data: `design-certificate` },
-                ],
-                [
-                  { text: `Гайды`, callback_data: `design-gide` },
-                  { text: `Иллюстрация`, callback_data: `design-illustr` },
-                ],
-                [
-                  { text: `Презентация`, callback_data: `design-present` },
-                  { text: `Интерфейс`, callback_data: `design-interface` },
-                ],
-                [
-                  { text: `Прототип`, callback_data: `design-prot` },
-                  { text: `Сайты`, callback_data: `design-web` },
-                ],
-                [{ text: `Закрыть Меню`, callback_data: `closeMenu` }],
-              ],
-            },
-          }
-        );
-        break;
-
-      case `Инфографика`:
-        await bot.sendMessage(
-          currentChat,
-          `Каталог раздела <u>${msg.text}</u> ↓`,
-          {
-            parse_mode: "HTML",
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  {
-                    text: `Карточки товаров`,
-                    callback_data: `infograph-goods`,
-                  },
-                ],
-                [{ text: `Закрыть Меню`, callback_data: `closeMenu` }],
-              ],
             },
           }
         );
@@ -141,218 +73,36 @@ const btnMenu = async (msg) => {
   }
 };
 
-const firstLvLChatMenu = async (ctx) => {
+const callbackMenu = async (ctx) => {
   const currentChat = ctx.message.chat.id;
 
   try {
     switch (ctx.data) {
-      case `smm-content`:
-        await bot.sendMessage(currentChat, `...<u>SMM/Контент</u>`, {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: `Распаковка личности`,
-                  callback_data: `smm-content-unpack`,
-                },
-                { text: `Банк идей`, callback_data: `smm-content-bank` },
-              ],
-              [
-                {
-                  text: `Контент план`,
-                  callback_data: `smm-content-plan`,
-                },
-                { text: `Закрыть Меню`, callback_data: `closeMenu` },
-              ],
-            ],
-          },
-        });
-        break;
-
-      case `smm-content-plan`:
-        const media = [
-          { type: "photo", media: "./assets/pic/smm-content-plan-2.jpeg" },
-          { type: "photo", media: "./assets/pic/smm-content-plan-3.jpeg" },
-          { type: "photo", media: "./assets/pic/smm-content-plan-4.jpeg" },
-        ];
-
+      case `showCatalog`:
         await bot.sendMessage(
           currentChat,
-          `...<u>SMM/Контент/Контент план</u>`,
+          `Навигация по разделам добавлена на вашу клавиатуру`,
           {
-            parse_mode: "HTML",
-          }
-        );
-        await bot.sendMessage(
-          currentChat,
-          `Контент план - составляется на разные промежутки времени (от 1 дня до месяца). Благодаря этого у вас будет готовый шаблон, как интересно преподносить контент по определённым схемам`
-        );
-        await bot.sendPhoto(
-          currentChat,
-          "./assets/pic/smm-content-plan-1.jpeg"
-        );
-        await bot.sendMessage(
-          currentChat,
-          `Контент план может быть 2 типов: тезисный и подробный`
-        );
-        await bot.sendMediaGroup(currentChat, media);
-        break;
-
-      case `smm-visual`:
-        await bot.sendMessage(currentChat, `...<u>SMM/Визуал</u>`, {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: `Оформление сторис`,
-                  callback_data: `smm-content-story`,
-                },
-              ],
-              [{ text: `Закрыть Меню`, callback_data: `closeMenu` }],
-            ],
-          },
-        });
-        break;
-
-      case `smm-content-story`:
-        await bot.sendMessage(
-          currentChat,
-          `...<u>SMM/Визуал/Оформление сторис</u>`,
-          {
-            parse_mode: "HTML",
             reply_markup: {
-              inline_keyboard: [
-                [
-                  {
-                    text: `До / После`,
-                    callback_data: `smm-content-story-delta`,
-                  },
-                  {
-                    text: `Серии сторис`,
-                    callback_data: `smm-content-story-series`,
-                  },
-                ],
-                [{ text: `Закрыть Меню`, callback_data: `closeMenu` }],
+              keyboard: [
+                [`Инфографика`, `Дизайн`],
+                [`SMM`, `Закрыть меню`],
               ],
+              resize_keyboard: true,
             },
           }
         );
         break;
 
-      case `smm-trigger`:
-        break;
-
-      case `smm-mockup`:
-        break;
-
-      case `smm-montage`:
-        break;
-
-      case `smm-anim`:
-        break;
-
-      case `design-price`:
-        break;
-
-      case `design-certificate`:
-        break;
-
-      case `design-gide`:
-        break;
-
-      case `design-illustr`:
-        break;
-
-      case `design-present`:
-        break;
-
-      case `design-interface`:
-        await bot.sendMessage(currentChat, `...<u>Дизайн/Интерфейс</u>`, {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: `Кнопки`,
-                  callback_data: `design-interface-btn`,
-                },
-              ],
-              [{ text: `Закрыть Меню`, callback_data: `closeMenu` }],
-            ],
-          },
-        });
-        break;
-
-      case `design-prot`:
-        break;
-
-      case `design-web`:
-        await bot.sendMessage(currentChat, `...<u>Дизайн/Сайты</u>`, {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: `Декстоп`,
-                  callback_data: `design-web-dekstop`,
-                },
-                {
-                  text: `Мобильная версия`,
-                  callback_data: `design-web-mobile`,
-                },
-              ],
-              [{ text: `Закрыть Меню`, callback_data: `closeMenu` }],
-            ],
-          },
-        });
-        break;
-
-      case `infograph-goods`:
+      case $.findCase(ctx.data, callbackMenuCases):
         await bot.sendMessage(
           currentChat,
-          `...<u>Игфографика/Карточки товаров</u>`,
+          $.findText(ctx.data, callbackMenuCases),
           {
-            parse_mode: "HTML",
+            parse_mode: `HTML`,
             reply_markup: {
-              inline_keyboard: [
-                [
-                  { text: `Одежда`, callback_data: `infograph-goods-clothes` },
-                  { text: `Свечи`, callback_data: `infograph-goods-candles` },
-                ],
-                [
-                  {
-                    text: `Косметика`,
-                    callback_data: `infograph-goods-cosmetics`,
-                  },
-                  {
-                    text: `Хозтовары`,
-                    callback_data: `infograph-goods-household`,
-                  },
-                ],
-                [
-                  {
-                    text: `Постельное бельё`,
-                    callback_data: `infograph-goods-bed`,
-                  },
-                  {
-                    text: `Нижнее бельё`,
-                    callback_data: `infograph-goods-lingerie`,
-                  },
-                ],
-                [
-                  {
-                    text: `Техника`,
-                    callback_data: `infograph-goods-appliances`,
-                  },
-                  {
-                    text: `Зоотовары`,
-                    callback_data: `infograph-goods-petSupplies`,
-                  },
-                ],
-                [{ text: `Закрыть Меню`, callback_data: `closeMenu` }],
-              ],
+              inline_keyboard: $.findKeyboard(ctx.data, callbackMenuCases),
+              resize_keyboard: true,
             },
           }
         );
@@ -360,7 +110,44 @@ const firstLvLChatMenu = async (ctx) => {
 
       case `closeMenu`:
         await bot.deleteMessage(currentChat, ctx.message.message_id);
-        await bot.deleteMessage(currentChat, ctx.message.message_id);
+        break;
+
+      default:
+        break;
+    }
+  } catch (error) {
+    console.log(`Проблема в пером вызове колбека`);
+  }
+};
+
+const callbackFile = async (ctx) => {
+  const currentChat = ctx.message.chat.id;
+  const callback = ctx.data;
+
+  try {
+    switch (callback) {
+      case $.findCase(callback, callbackFileCases):
+        const posts = $.findPosts(callback, callbackFileCases);
+        for (let i = 0; i < posts.length; i++) {
+          if (posts[i].content.length === 1) {
+            if (posts[i].content[0].type === "photo") {
+              await bot.sendPhoto(currentChat, posts[i].content[0].media, {
+                caption: posts[i].text,
+              });
+            } else {
+              await bot.sendVideo(currentChat, posts[i].content[0].media, {
+                caption: posts[i].text,
+              });
+            }
+          } else if (posts[i].content.length > 1) {
+            await bot.sendMediaGroup(currentChat, posts[i].content).then(() => {
+              bot.sendMessage(currentChat, posts[i].text);
+            });
+          }
+        }
+        break;
+
+      default:
         break;
     }
   } catch (error) {
@@ -375,7 +162,11 @@ bot.on(`polling_error`, (err) => {
     console.log(err.message);
   }
 });
+bot.on(`text`, keyboardMenu);
+bot.on(`callback_query`, callbackMenu);
+bot.on(`callback_query`, callbackFile);
 
-bot.setMyCommands(commands);
-bot.on(`text`, btnMenu);
-bot.on(`callback_query`, firstLvLChatMenu);
+// 1. Объединить "callbackMenu" и "callbackFile";
+// 2. Добавить кнопку после закрытия клавиатуры;
+// 3. Продумать setTimeOut;
+// 4. Перенести всю структуру из "callbackMenuOld" и удалить функцию из основного файла;

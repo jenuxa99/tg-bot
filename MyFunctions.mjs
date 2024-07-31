@@ -13,4 +13,9 @@ export const MyFunctions = {
     const found = casesObject.find((element) => element.case === msgORctx);
     return found ? found.text : `- Текст не найден -`;
   },
+
+  findPosts(msgORctx, casesObject) {
+    const found = casesObject.find((element) => element.case === msgORctx);
+    return found ? found.posts : `- Посты не найдены -`;
+  },
 };
