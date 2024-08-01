@@ -1,15 +1,15 @@
 "use strict";
 
 import TelegramBot from "node-telegram-bot-api";
-import { MyFunctions } from "./MyFunctions.mjs";
+import { MyFunctions } from "./functions.mjs";
 import {
-  keyboardMenuCases,
-  callbackMenuCases,
-  callbackFileCases,
+  keyboardArray,
+  menuCallbackArray,
+  fileCallbackArray,
 } from "./cases.mjs";
 
 const $ = MyFunctions;
-const token = `7355176635:AAE_lNO-utY6lEZu53R2NJ0JfhqDgOg6GDE`;
+const token = `Hmm, I think there's something missing here.`;
 const bot = new TelegramBot(token, {
   polling: {
     interval: 300,
@@ -17,11 +17,11 @@ const bot = new TelegramBot(token, {
   },
 });
 
-const keyboardMenu = async (msg) => {
+const getKeyboard = async (msg) => {
   const currentChat = msg.chat.id;
-
+  const callback = msg.text;
   try {
-    switch (msg.text) {
+    switch (callback) {
       case `/start`:
         await bot.sendMessage(currentChat, `Приветствие`, {
           parse_mode: `HTML`,
@@ -34,14 +34,14 @@ const keyboardMenu = async (msg) => {
         });
         break;
 
-      case $.findCase(msg.text, keyboardMenuCases):
+      case $.findCase(callback, keyboardArray):
         await bot.sendMessage(
           currentChat,
-          `Каталог раздела <b>${$.findCase(msg.text, keyboardMenuCases)}</b>`,
+          `Каталог раздела <b>${$.findCase(callback, keyboardArray)}</b>`,
           {
             parse_mode: `HTML`,
             reply_markup: {
-              inline_keyboard: $.findKeyboard(msg.text, keyboardMenuCases),
+              inline_keyboard: $.findKeyboard(callback, keyboardArray),
               resize_keyboard: true,
             },
           }
@@ -59,25 +59,31 @@ const keyboardMenu = async (msg) => {
           }
         );
         break;
-
-      default:
-        await bot.sendMessage(
-          currentChat,
-          `Пожалуйста, пользуйтесь навигацией.`,
-          { disable_notification: true }
-        );
-        break;
     }
   } catch (error) {
-    console.log(error);
+    console.log(error + `Проблема в функции getKeyboard`);
   }
 };
 
-const callbackMenu = async (ctx) => {
+const getNavBtn = async (ctx) => {
   const currentChat = ctx.message.chat.id;
-
+  const callback = ctx.data;
   try {
-    switch (ctx.data) {
+    switch (callback) {
+      case $.findCase(callback, menuCallbackArray):
+        await bot.sendMessage(
+          currentChat,
+          $.findText(callback, menuCallbackArray),
+          {
+            parse_mode: `HTML`,
+            reply_markup: {
+              inline_keyboard: $.findKeyboard(callback, menuCallbackArray),
+              resize_keyboard: true,
+            },
+          }
+        );
+        break;
+
       case `showCatalog`:
         await bot.sendMessage(
           currentChat,
@@ -94,41 +100,22 @@ const callbackMenu = async (ctx) => {
         );
         break;
 
-      case $.findCase(ctx.data, callbackMenuCases):
-        await bot.sendMessage(
-          currentChat,
-          $.findText(ctx.data, callbackMenuCases),
-          {
-            parse_mode: `HTML`,
-            reply_markup: {
-              inline_keyboard: $.findKeyboard(ctx.data, callbackMenuCases),
-              resize_keyboard: true,
-            },
-          }
-        );
-        break;
-
       case `closeMenu`:
         await bot.deleteMessage(currentChat, ctx.message.message_id);
         break;
-
-      default:
-        // callbackFile;
-        break;
     }
   } catch (error) {
-    console.log(`Проблема в пером вызове колбека`);
+    console.log(error + `Проблема в функции getNavBtn`);
   }
 };
 
-const callbackFile = async (ctx) => {
+const getMedia = async (ctx) => {
   const currentChat = ctx.message.chat.id;
   const callback = ctx.data;
-
   try {
     switch (callback) {
-      case $.findCase(callback, callbackFileCases):
-        const posts = $.findPosts(callback, callbackFileCases);
+      case $.findCase(callback, fileCallbackArray):
+        const posts = $.findPosts(callback, fileCallbackArray);
         for (let i = 0; i < posts.length; i++) {
           if (posts[i].content.length === 1) {
             if (posts[i].content[0].type === "photo") {
@@ -156,13 +143,13 @@ const callbackFile = async (ctx) => {
         break;
     }
   } catch (error) {
-    console.log(error);
+    console.log(error + `Проблема в функции getMedia`);
   }
 };
 
-bot.on(`text`, keyboardMenu);
-bot.on(`callback_query`, callbackMenu);
-bot.on(`callback_query`, callbackFile);
+bot.on(`text`, getKeyboard);
+bot.on(`callback_query`, getNavBtn);
+bot.on(`callback_query`, getMedia);
 bot.on(`polling_error`, (err) => {
   if (err.data && err.data.error) {
     console.log(err.data.error.message);

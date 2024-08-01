@@ -1,4 +1,6 @@
-export const keyboardMenuCases = [
+"use strict";
+
+export const keyboardArray = [
   {
     case: "SMM",
     buttons: [
@@ -57,7 +59,7 @@ export const keyboardMenuCases = [
   },
 ];
 
-export const callbackMenuCases = [
+export const menuCallbackArray = [
   {
     case: "smm-content",
     text: "SMM / Контент",
@@ -156,7 +158,7 @@ export const callbackMenuCases = [
   },
 ];
 
-export const callbackFileCases = [
+export const fileCallbackArray = [
   {
     case: "smm-content-plan",
     posts: [
@@ -196,7 +198,7 @@ export const callbackFileCases = [
     case: "smm-visual-story-series",
     posts: [
       {
-        text: "#stories 5 советов по уходу за волосами",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-1.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-2.jpg" },
@@ -206,7 +208,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#stories Уходовая косметика",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-6.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-7.jpg" },
@@ -215,14 +217,14 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#stories Ресторан",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-10.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-11.jpg" },
         ],
       },
       {
-        text: "#stories Маникюр",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-12.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-13.jpg" },
@@ -232,7 +234,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#stories Уход за собой",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-17.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-18.jpg" },
@@ -241,7 +243,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#stories Уход за зубами",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-21.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-22.jpg" },
@@ -250,7 +252,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#stories Уход за бровями",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-25.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-26.jpg" },
@@ -260,7 +262,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#stories БухДзен",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-30.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-31.jpg" },
@@ -276,7 +278,7 @@ export const callbackFileCases = [
     case: "smm-visual-story-delta",
     posts: [
       {
-        text: "#stories До и после для салона",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-delta-1.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-delta-2.jpg" },
@@ -284,7 +286,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#stories До и после коммерция",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-visual-story-delta-4.jpg" },
           { type: "photo", media: "./assets/smm-visual-story-delta-5.jpg" },
@@ -311,7 +313,7 @@ export const callbackFileCases = [
     case: "smm-mockup",
     posts: [
       {
-        text: "#mockup Сертификат",
+        text: "",
         content: [
           { type: "photo", media: "./assets/smm-mockup-1.png" },
           { type: "photo", media: "./assets/smm-mockup-2.jpg" },
@@ -365,14 +367,14 @@ export const callbackFileCases = [
     case: "design-price",
     posts: [
       {
-        text: "#price Для мастера маникюра",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-price-1.jpg" },
           { type: "photo", media: "./assets/design-price-2.jpg" },
         ],
       },
       {
-        text: "#price",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-price-3.jpg" },
           { type: "photo", media: "./assets/design-price-4.jpg" },
@@ -408,7 +410,7 @@ export const callbackFileCases = [
     case: "design-illustr",
     posts: [
       {
-        text: "#иллюстрации",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-illustr-1.png" },
           { type: "photo", media: "./assets/design-illustr-2.jpg" },
@@ -422,7 +424,7 @@ export const callbackFileCases = [
     case: "design-present",
     posts: [
       {
-        text: "#презентация",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-present-1.jpg" },
           { type: "photo", media: "./assets/design-present-2.jpg" },
@@ -434,7 +436,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#презентация",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-present-8.jpg" },
           { type: "photo", media: "./assets/design-present-9.jpg" },
@@ -447,11 +449,11 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#презентация",
+        text: "",
         content: [{ type: "photo", media: "./assets/design-present-16.png" }],
       },
       {
-        text: "#презентация",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-present-17.png" },
           { type: "photo", media: "./assets/design-present-18.png" },
@@ -469,7 +471,7 @@ export const callbackFileCases = [
     case: "design-interface",
     posts: [
       {
-        text: "#дизайнкнопок",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-interface-btn-1.jpg" },
           { type: "photo", media: "./assets/design-interface-btn-2.jpg" },
@@ -480,7 +482,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#дизайнинтерфейса",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-interface-1.jpg" },
           { type: "photo", media: "./assets/design-interface-2.jpg" },
@@ -501,7 +503,7 @@ export const callbackFileCases = [
     case: "design-web",
     posts: [
       {
-        text: "#web",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-web-1.jpg" },
           { type: "photo", media: "./assets/design-web-2.jpg" },
@@ -511,7 +513,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#web",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-web-6.png" },
           { type: "photo", media: "./assets/design-web-7.jpg" },
@@ -521,7 +523,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#web",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-web-11.jpg" },
           { type: "photo", media: "./assets/design-web-12.jpg" },
@@ -533,7 +535,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#web",
+        text: "",
         content: [
           { type: "photo", media: "./assets/design-web-18.jpg" },
           { type: "photo", media: "./assets/design-web-19.jpg" },
@@ -573,7 +575,7 @@ export const callbackFileCases = [
     case: "infograph-goods-clothes",
     posts: [
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-clothes-1.jpg" },
           { type: "photo", media: "./assets/infograph-goods-clothes-2.jpg" },
@@ -586,7 +588,7 @@ export const callbackFileCases = [
     case: "infograph-goods-candles",
     posts: [
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-candles-1.jpg" },
           { type: "photo", media: "./assets/infograph-goods-candles-2.jpg" },
@@ -598,7 +600,7 @@ export const callbackFileCases = [
     case: "infograph-goods-cosmetics",
     posts: [
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-cosmetics-1.jpg" },
         ],
@@ -609,14 +611,14 @@ export const callbackFileCases = [
     case: "infograph-goods-household",
     posts: [
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-household-1.jpg" },
           { type: "photo", media: "./assets/infograph-goods-household-2.jpg" },
         ],
       },
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-household-3.jpg" },
           { type: "photo", media: "./assets/infograph-goods-household-4.jpg" },
@@ -624,7 +626,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-household-6.jpg" },
         ],
@@ -635,7 +637,7 @@ export const callbackFileCases = [
     case: "infograph-goods-bed",
     posts: [
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-bed-1.jpg" },
         ],
@@ -646,7 +648,7 @@ export const callbackFileCases = [
     case: "infograph-goods-lingerie",
     posts: [
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-lingerie-1.png" },
         ],
@@ -657,14 +659,14 @@ export const callbackFileCases = [
     case: "infograph-goods-appliances",
     posts: [
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-appliances-1.jpg" },
           { type: "photo", media: "./assets/infograph-goods-appliances-2.jpg" },
         ],
       },
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-appliances-4.jpg" },
           { type: "photo", media: "./assets/infograph-goods-appliances-5.jpg" },
@@ -672,7 +674,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#карточки",
+        text: "",
         content: [
           { type: "photo", media: "./assets/infograph-goods-appliances-3.jpg" },
         ],
@@ -683,7 +685,7 @@ export const callbackFileCases = [
     case: "infograph-goods-petSupplies",
     posts: [
       {
-        text: "#карточки",
+        text: "",
         content: [
           {
             type: "photo",
@@ -692,7 +694,7 @@ export const callbackFileCases = [
         ],
       },
       {
-        text: "#карточки",
+        text: "",
         content: [
           {
             type: "photo",

@@ -1,21 +1,23 @@
+"use strict";
+
 export const MyFunctions = {
   findCase(msgORctx, casesArray) {
     const found = casesArray.find((element) => element.case === msgORctx);
-    return found ? found.case : console.log("Case not found");
+    return found ? found.case : undefined;
   },
 
   findKeyboard(msgORctx, casesArray) {
     const found = casesArray.find((element) => element.case === msgORctx);
-    return found ? found.buttons : console.log(`Keyboard not found`);
+    return found ? found.buttons : undefined;
   },
 
   findText(msgORctx, casesArray) {
     const found = casesArray.find((element) => element.case === msgORctx);
-    return found ? found.text : console.log(`Text not found`);
+    return found ? found.text : console.log(`message is empty`);
   },
 
   findPosts(msgORctx, casesArray) {
     const found = casesArray.find((element) => element.case === msgORctx);
-    return found ? found.posts : console.log(`Posts not found`);
+    return found ? found.posts : undefined;
   },
 };
