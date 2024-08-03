@@ -9,7 +9,7 @@ import {
 } from "./cases.mjs";
 
 const $ = MyFunctions;
-const token = `Hmm, I think there's something missing here.`;
+const token = `7355176635:AAE_lNO-utY6lEZu53R2NJ0JfhqDgOg6GDE`;
 const bot = new TelegramBot(token, {
   polling: {
     interval: 300,
