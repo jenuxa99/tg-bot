@@ -1,5 +1,8 @@
 "use strict";
 
+require("dotenv").config();
+const token = process.env.BOT_TOKEN;
+
 import TelegramBot from "node-telegram-bot-api";
 import { MyFunctions } from "./functions.mjs";
 import {
@@ -9,7 +12,6 @@ import {
 } from "./cases.mjs";
 
 const $ = MyFunctions;
-const token = `7355176635:AAE_lNO-utY6lEZu53R2NJ0JfhqDgOg6GDE`;
 const bot = new TelegramBot(token, {
   polling: {
     interval: 300,
@@ -22,7 +24,6 @@ const getKeyboard = async (msg) => {
   const callback = msg.text;
   try {
     switch (callback) {
-
       case $.findCase(callback, keyboardArray):
         await bot.sendMessage(
           currentChat,
@@ -36,9 +37,9 @@ const getKeyboard = async (msg) => {
           }
         );
         break;
-        
+
       case `/start`:
-        await bot.sendMessage(currentChat, {
+        await bot.sendMessage(currentChat, "", {
           reply_markup: {
             keyboard: [
               [`Инфографика`, `Дизайн`],
@@ -50,7 +51,7 @@ const getKeyboard = async (msg) => {
         break;
 
       case `Закрыть меню`:
-        await bot.sendMessage(currentChat, {
+        await bot.sendMessage(currentChat, "", {
           reply_markup: {
             remove_keyboard: true,
           },
