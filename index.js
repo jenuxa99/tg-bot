@@ -39,7 +39,7 @@ const getKeyboard = async (msg) => {
         break;
 
       case `/start`:
-        await bot.sendMessage(currentChat, "", {
+        await bot.sendMessage(currentChat, "Навигация по каталогу разделов добавлена на Вашу клавиатуру =)", {
           reply_markup: {
             keyboard: [
               [`Инфографика`, `Дизайн`],
@@ -51,11 +51,15 @@ const getKeyboard = async (msg) => {
         break;
 
       case `Закрыть меню`:
-        await bot.sendMessage(currentChat, "", {
-          reply_markup: {
-            remove_keyboard: true,
-          },
-        });
+        await bot.sendMessage(
+          currentChat,
+          "Навигация по каталогу разделов убрана с Вашей клавиатуры =(",
+          {
+            reply_markup: {
+              remove_keyboard: true,
+            },
+          }
+        );
         break;
     }
   } catch (error) {
