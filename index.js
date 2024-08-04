@@ -22,17 +22,6 @@ const getKeyboard = async (msg) => {
   const callback = msg.text;
   try {
     switch (callback) {
-      case `/start`:
-        await bot.sendMessage(currentChat, `Приветствие`, {
-          parse_mode: `HTML`,
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: `Показать каталог`, callback_data: `showCatalog` }],
-            ],
-            resize_keyboard: true,
-          },
-        });
-        break;
 
       case $.findCase(callback, keyboardArray):
         await bot.sendMessage(
@@ -47,17 +36,25 @@ const getKeyboard = async (msg) => {
           }
         );
         break;
+        
+      case `/start`:
+        await bot.sendMessage(currentChat, {
+          reply_markup: {
+            keyboard: [
+              [`Инфографика`, `Дизайн`],
+              [`SMM`, `Закрыть меню`],
+            ],
+            resize_keyboard: true,
+          },
+        });
+        break;
 
       case `Закрыть меню`:
-        await bot.sendMessage(
-          currentChat,
-          `Каталог разделов убран из клавиатуры`,
-          {
-            reply_markup: {
-              remove_keyboard: true,
-            },
-          }
-        );
+        await bot.sendMessage(currentChat, {
+          reply_markup: {
+            remove_keyboard: true,
+          },
+        });
         break;
     }
   } catch (error) {
@@ -78,22 +75,6 @@ const getNavBtn = async (ctx) => {
             parse_mode: `HTML`,
             reply_markup: {
               inline_keyboard: $.findKeyboard(callback, menuCallbackArray),
-              resize_keyboard: true,
-            },
-          }
-        );
-        break;
-
-      case `showCatalog`:
-        await bot.sendMessage(
-          currentChat,
-          `Навигация по разделам добавлена на вашу клавиатуру`,
-          {
-            reply_markup: {
-              keyboard: [
-                [`Инфографика`, `Дизайн`],
-                [`SMM`, `Закрыть меню`],
-              ],
               resize_keyboard: true,
             },
           }
